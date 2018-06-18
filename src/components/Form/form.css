@@ -1,0 +1,12 @@
+.input-container{
+	width:100%;
+	background-color: #ffffff8c;
+}
+
+.input-container input{
+}
+
+.view{
+    width: fit-content;
+    margin: 0 auto;
+}

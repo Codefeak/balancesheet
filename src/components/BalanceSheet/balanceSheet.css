@@ -1,0 +1,63 @@
+
+.balance-sheet-container{
+	width:100%;
+	margin : 5vw auto;
+	position:absolute;
+	top: 0;
+	left:0;
+	background-color: #9cd1ea;
+	overflow-y: scroll;
+	display:none;
+	
+}
+
+.true{
+	display:grid;
+}
+
+.false{
+	display:none;
+}
+
+::-webkit-scrollbar{
+	display: none
+}
+
+.balance-sheet-container>span{
+	grid-row:1;
+	grid-column: 1/3;
+	justify-self: right;
+	padding:8px 10px;
+	border-radius: 50%;
+	background-color: #ffffff52;
+}
+
+.balance-sheet-container>span:hover{
+	background-color: #ff990063;
+	cursor: pointer;
+}
+
+.income-container{
+	grid-row:2;
+	grid-column: 1;
+}
+
+.expense-container{
+	grid-row:2;
+	grid-column: 2;
+}
+
+
+
+.balance-sheet-container>p{
+	grid-row:3;
+}
+.balance-sheet-container table{
+	width:95%;
+}
+
+./*balance-sheet-container th, .balance-sheet-container td {
+    border-bottom: 1px solid #ddd;
+}*/
+.balance-sheet-container tr:nth-child(even) {
+	background-color: #eeeeff85;}
