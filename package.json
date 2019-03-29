@@ -5,10 +5,11 @@
   "homepage": "https://codefeak.github.io/balancesheet/",
   "dependencies": {
     "gh-pages": "^2.0.1",
-    "moment": "^2.22.2",
+    "moment": "^2.24.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4",
+    "styled-components": "^4.2.0",
     "update": "^0.7.4"
   },
   "scripts": {

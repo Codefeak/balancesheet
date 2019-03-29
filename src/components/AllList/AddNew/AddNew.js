@@ -1,19 +1,24 @@
-import React from 'react';
+import React from "react";
+import moment from "moment";
+import styled from "styled-components";
 
-const AddNew = (props)=>{
-	return( 
+import { UL } from "../../../styledComponent";
 
-		props.data.map(item=>{return(
-									<tr key={Math.random()}>
-										<td>{item.description}</td>
-										<td>{item.amount}</td>
-										<td>{item.type}</td>
-										<td>{item.eventDate}</td>
-										<td></td>
-									</tr>)
-		})
+const ULlist = styled(UL)`
+`;
 
-	)
-}
+const AddNew = props => {
+  return props.data.map(item => {
+    return (
+      <ULlist key={Math.random()}>
+        <li>{item.description}</li>
+        <li>{item.amount}</li>
+        <li>{item.type}</li>
+        <li>{item.eventDate}</li>
+        <li>{moment().format("l")}</li>
+      </ULlist>
+    );
+  });
+};
 
 export default AddNew;

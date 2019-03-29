@@ -1,44 +1,41 @@
-import React from 'react';
-import AddNew from './AddNew/AddNew';
-import './AllList.css';
+import React from "react";
+import AddNew from "./AddNew/AddNew";
+import styled from "styled-components";
 
-class AllList extends React.Component{
-	// AddNew(){
-	// 	let temp = [...this.state.list,this.props.data];
-	// 		this.props.data.isUpdate && this.setState({list:temp})
-	// 		console.log(this.props.data, this.state.list);	
-	// }
+import { Entries, UL, ListWrapper } from "../../styledComponent";
 
-	// componentDidUpdate(prevProps,prevState){
-	// 	if(prevState.list.length!==this.state.list.length)
-	// 	this.balance();
-	// }
+const ULheader = styled(UL)`
+  overflow: auto;
+`;
 
-	render(){
-	console.log(this.props.balance)
+const Li1 = styled.li`
+  grid-area: Des;
+`;
 
-		return(
-			<div className="list-container">
-			<h2>Entries List</h2>
-				<table>
-					<tbody>
-						<tr>
-							<th>Description</th>
-							<th>Amount</th>
-							<th>Type</th>
-							<th>Date of Events</th>
-							<th>Time of Entry</th>
-						</tr>
-						<AddNew data={this.props.data}/>
-						<tr>
-							<th>Balance</th>
-							<td>{this.props.balance}</td>
-						</tr>		
-					</tbody>
-				</table>
-			</div>
-		)
-	}
+class AllList extends React.Component {
+  render() {
+    return (
+      <Entries>
+        <h2>Entries List</h2>
+        <div>
+          <ULheader>
+            <Li1>Description</Li1>
+            <li>Amount</li>
+            <li>Type</li>
+            <li>Date of Events</li>
+            <li>Time of Entry</li>
+          </ULheader>
+          <ListWrapper>
+            <AddNew data={this.props.data} />
+          </ListWrapper>
+          <UL>
+            <li>Balance</li>
+            <li>{this.props.balance}</li>
+          </UL>
+        </div>
+      </Entries>
+    );
+  }
 }
 
 export default AllList;

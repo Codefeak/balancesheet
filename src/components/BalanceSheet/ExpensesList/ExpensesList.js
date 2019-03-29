@@ -1,40 +1,48 @@
-import React from 'react';
+import React from "react";
+import styled from "styled-components";
 
-class ExpensesList extends React.Component{
-	
-	
-	sum=()=>{
-		this.props.data.map(item=>{return item+=Number(item)})
-	}
-	render(){
-		return(
-			<div>
-				<table>
-					<tbody>
-						<tr>
-							<th>Description</th>
-							<th>Date of Events</th>
-							<th>Time of Entry</th>
-							<th>Amount</th>
-						</tr>
-						{this.props.data.map(item=>{
-							return(<tr key={Math.random()}>
-										<td>{item.description}</td>
-										<td>{item.date}</td>
-										<td>{item.time}</td>
-										<td>{item.amount}</td>
-									</tr>
-									)
-						})}
-						<tr>
-							<th>Total Expenses</th>
-							<th></th>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		)
-	}
+import { Expenses, UL } from "../../../styledComponent";
+
+const ULheader = styled(UL)`
+  overflow: auto;
+`;
+
+const ULlist = styled(UL)``;
+
+class ExpensesList extends React.Component {
+  sum = () => {
+    this.props.data.map(item => {
+      return (item += Number(item));
+    });
+  };
+  render() {
+    return (
+      <Expenses>
+        <div>
+          <ULheader>
+            <li>Description</li>
+            <li>Date of Events</li>
+            <li>Time of Entry</li>
+            <li>Amount</li>
+          </ULheader>
+          {this.props.data.map(item => {
+            return (
+              <ULlist key={Math.random()}>
+                <li>{item.description}</li>
+                <li>{item.date}</li>
+                <li>{item.time}</li>
+                <li>{item.amount}</li>
+              </ULlist>
+            );
+          })}
+          <UL>
+            <li>Total Expenses</li>
+            <li />
+          </UL>
+        </div>
+      </Expenses>
+    );
+  }
 }
 
 export default ExpensesList;
