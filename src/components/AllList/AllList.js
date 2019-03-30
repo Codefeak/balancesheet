@@ -7,6 +7,11 @@ import { Entries, UL, ListWrapper } from "../../styledComponent";
 const ULheader = styled(UL)`
   overflow: auto;
   font-weight: 600;
+  margin-right: 15px;
+`;
+export const ULTotal = styled(UL)`
+  border-width: 2px 0px 2px 0px;
+  border-style: solid
 `;
 
 const Li1 = styled.li`
@@ -20,7 +25,7 @@ class AllList extends React.Component {
         <h2>Entries List</h2>
         <div>
           <ULheader>
-            <Li1>Description</Li1>
+            <li>Description</li>
             <li>Amount</li>
             <li>Type</li>
             <li>Date of Events</li>
@@ -29,10 +34,10 @@ class AllList extends React.Component {
           <ListWrapper>
             <AddNew data={this.props.data} />
           </ListWrapper>
-          <UL>
+          <ULTotal>
             <li>Balance</li>
             <li>{this.props.balance}</li>
-          </UL>
+          </ULTotal>
         </div>
       </Entries>
     );

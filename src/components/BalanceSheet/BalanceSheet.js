@@ -19,7 +19,9 @@ class BSPage extends React.Component {
           <ExpensesList data={this.props.expensesList} />
         </div>
         <p>Balance</p>
-        <p>{this.props.balance}</p>
+        <p>
+          <b>{this.props.balance}</b>
+        </p>
       </BSWrapper>
     );
   }
@@ -30,17 +32,17 @@ class BalanceSheet extends React.Component {
     return (
       <BS>
         <BSPage {...this.props} ref={el => (this.componentRef = el)} />
-          <ReactToPrint
-            trigger={() => (
-              <Button width="100px">
-                <i className="fas fa-print fa-lg" />
-              </Button>
-            )}
-            content={() => this.componentRef}
-          />
-          <Button width="100px" onClick={this.props.button}>
-            <i className="fas fa-arrow-circle-left fa-lg" />
-          </Button>
+        <ReactToPrint
+          trigger={() => (
+            <Button width="100px">
+              <i className="fas fa-print fa-lg" />
+            </Button>
+          )}
+          content={() => this.componentRef}
+        />
+        <Button width="100px" onClick={this.props.button}>
+          <i className="fas fa-arrow-circle-left fa-lg" />
+        </Button>
       </BS>
     );
   }

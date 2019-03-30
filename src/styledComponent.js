@@ -98,7 +98,8 @@ export const Expenses = styled.div`
 export const UL = styled.ul`
   list-style: none;
   display: grid;
-  grid-template: "Des Amt T D TOE";
+  // grid-template: "Des Amt T D TOE";
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   font-size: 0.8em;
 `;
 export const ListWrapper = styled.div`

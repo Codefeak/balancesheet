@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Income, UL, ListWrapper } from "../../../styledComponent";
+import { ULTotal } from "../../AllList/AllList";
 
 const ULheader = styled(UL)`
   overflow: auto;
@@ -38,10 +39,10 @@ class IncomeList extends React.Component {
               );
             })}
           </ListWrapper>
-          <UL>
+          <ULTotal>
             <li>Total Income</li>
             <li />
-          </UL>
+          </ULTotal>
         </div>
       </Income>
     );
