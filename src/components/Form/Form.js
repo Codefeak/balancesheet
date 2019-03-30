@@ -1,17 +1,27 @@
 import React from "react";
+import styled from "styled-components";
+import { Field, reduxForm } from "redux-form";
+import formField from "./renderField";
+
 import {
   Button,
-  Input,
-  StyledForm,
-  Label,
-  Select,
   SelectWrapper,
   Option,
+  Label,
   Err,
   FormWrapper
 } from "../../styledComponent";
-import styled from "styled-components";
 
+export const StyledForm = styled.form`
+  margin: 120px 15px;
+  display: grid;
+  grid-template:
+    "description description ."
+    "amount amount .  "
+    "income date . "
+    "add view  ."/1fr 1fr;
+  border: 1px dashed saddlebrown;
+`;
 const DescInputWrapper = styled.div`
   grid-area: description;
   display: flex;
@@ -24,8 +34,14 @@ const AmtInputWrapper = styled.div`
   align-items: center;
   position: relative;
 `;
-const DateInput = styled(Input)`
+const DateWrapper = styled.div`
   grid-area: date;
+  display: flex;
+  text-align: right;
+`;
+export const Select = styled(Field)`
+  margin: 15px 0;
+  height: 40px;
   flex-grow: 1;
 `;
 
@@ -37,47 +53,54 @@ const ViewBtn = styled(Button)`
 `;
 
 const Form = props => {
+  const { handleSubmit } = props;
   return (
     <FormWrapper>
-      {console.log(props)}
-      <StyledForm action="" onSubmit={props.submit}>
+      <StyledForm id="form" onSubmit={handleSubmit}>
         <DescInputWrapper>
-          <Label htmlFor="description">Description:</Label>
-          <Input
-            id="description"
-            type="text"
-            placeholder="Description"
+          <Field
             name="description"
-            onChange={props.update}
+            component={formField}
+            type="text"
+            label="Description :"
+            placeholder="Enter Description"
           />
           {props.desErr && <Err>{props.desErr}</Err>}
         </DescInputWrapper>
         <AmtInputWrapper>
-          <Label htmlFor="amount">Amount:</Label>
-          <Input
-            id="amount"
-            type="text"
-            placeholder="Amount"
+          <Field
             name="amount"
-            onChange={props.update}
+            component={formField}
+            type="text"
+            label="Amount:"
+            placeholder="Enter Amount"
           />
           {props.amtErr && <Err>{props.amtErr}</Err>}
         </AmtInputWrapper>
         <SelectWrapper>
-          <Label>Select Type</Label>
-          <Select onChange={props.update} name="type">
-            <Option name="Income">Income</Option>
-            <Option name="Expenses">Expenses</Option>
+          <Label>Select Type:</Label>
+          <Select component="select" name="type">
+            <Option>---</Option>
+            <Option value="Income">Income</Option>
+            <Option value="Expenses">Expenses</Option>
           </Select>
+          {props.typeErr && alert(props.typeErr)}
         </SelectWrapper>
-        <DateInput type="date" name="eventDate" onChange={props.update} />
+        <DateWrapper>
+          <Field
+            component={formField}
+            name="eventDate"
+            label="Date : "
+            size="50px"
+            type="date"
+          />
+        </DateWrapper>
+        {props.dateErr && alert(props.dateErr)}
         <AddBtn type="Submit">Add</AddBtn>
-        <ViewBtn onClick={props.button}>
-          View BalanceSheet
-        </ViewBtn>
+        <ViewBtn onClick={props.button}>View BalanceSheet</ViewBtn>
       </StyledForm>
     </FormWrapper>
   );
 };
 
-export default Form;
+export default reduxForm({ form: "form" })(Form);

@@ -7,7 +7,7 @@ export const ExtWrapper = styled.div`
 `;
 
 export const Button = styled.button`
-  margin: 15px;
+  margin: 40px 15px;
   min-width: ${props => props.width || "200px"};
   max-width: ${props => props.width || "200px"};
   padding: 20px;
@@ -24,39 +24,17 @@ export const Button = styled.button`
 
 export const Label = styled.label`
   margin: 15px;
-  min-width: 100px;
+  min-width: ${props => props.size || "100px"};
+  max-width: ${props => props.size || "100px"};
+  align-self: center;
 `;
 
-export const Input = styled.input`
-  margin: 15px;
-  flex-grow: 1;
-  height: 30px;
-  font-size: medium;
-  border: none;
-  border-bottom: 1px solid grey;
-  background: transparent;
-`;
-
-export const StyledForm = styled.form`
-  margin: 120px 15px;
-  display: grid;
-  grid-template:
-    "description description ."
-    "amount amount .  "
-    "income date . "
-    "add view  ."/1fr 1fr;
-  border: 1px dashed saddlebrown;
-`;
 export const SelectWrapper = styled.div`
   grid-area: income;
   display: flex;
   align-items: center;
 `;
-export const Select = styled.select`
-  margin: 15px;
-  height: 40px;
-  flex-grow: 1;
-`;
+
 export const Option = styled.option`
   font-size: 14px;
 `;
@@ -102,12 +80,17 @@ export const Entries = styled.div`
 
 export const BS = styled.div`
   grid-area: bs;
+  height: 600px;
+  margin: 15px;
+`;
+export const BSWrapper = styled.section`
   display: grid;
   grid-template: "income expenses" auto;
 `;
 
 export const Income = styled.div`
   grid-aread: income;
+  flex-grow: 1;
 `;
 export const Expenses = styled.div`
   grid-aread: expenses;
@@ -116,8 +99,27 @@ export const UL = styled.ul`
   list-style: none;
   display: grid;
   grid-template: "Des Amt T D TOE";
+  font-size: 0.8em;
 `;
 export const ListWrapper = styled.div`
+  min-height: 400px;
   max-height: 400px;
   overflow-y: scroll;
+`;
+
+export const Input = styled.input`
+  margin: 15px 0;
+  flex-grow: 1;
+  height: 30px;
+  font-size: medium;
+  border: none;
+  border-bottom: 1px solid grey;
+  background: transparent;
+`;
+
+export const BtnWrapper = styled.div`
+  display: grid;
+  grid-template-rows: 140px;
+  align-self: flex-end;
+  grid-template-columns: 1fr 1fr;
 `;

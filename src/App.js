@@ -1,31 +1,33 @@
 import React, { Component } from "react";
+import {
+  getFormValues,
+  getFormError,
+  isDirty,
+  isPristine,
+  isValid,
+  isInvalid,
+  isSubmitting
+} from "redux-form";
+
 import Form from "./components/Form/Form";
 import AllList from "./components/AllList/AllList";
 import BalanceSheet from "./components/BalanceSheet/BalanceSheet";
 
 import { H1, InnerWrapper, ExtWrapper } from "./styledComponent";
+import { connect } from "react-redux";
 
 class App extends Component {
   state = {
-    name: "",
-    description: "",
-    amount: "",
-    type: "Income",
-    eventDate: "",
     IncomeList: [],
     ExpensesList: [],
     List: [],
     balance: 0,
     display: false,
-    isValid: false,
+    isValid: true,
     amtErr: null,
-    desErr: null
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    this.validate();
-    this.state.isValid && this.createList();
+    desErr: null,
+    dateErr: null,
+    typeErr: null
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -34,68 +36,96 @@ class App extends Component {
     }
   }
 
-  validate = () => {
-    this.validateDescription() &&
-      this.validateAmount() &&
-      this.validateAmount() &&
-      this.setState({ ...this.state, isValid: true });
-  };
+  //   validate = () => {
+  //     this.validateDescription() &&
+  //       this.validateAmount() &&
+  //       this.validateAmount() &&
+  //       this.validateType() &&
+  //       this.validateDate() &&
+  //       this.setState({ ...this.state, isValid: true });
+  //   };
 
-  validateDescription = () => {
-    const description = document.getElementById("description").value;
-    const descRegX = /[A-Za-z0-9]/;
-    if (description === "" || description === null) {
-      this.setState({
-        ...this.state,
-        desErr: "Description cannot be empty"
-      });
-      return false;
-    } else if (descRegX.test(description) === false) {
-      this.setState({
-        ...this.state,
-        desErr: "Description cannot have special characters"
-      });
-      return false;
-    }
-    this.setState({
-      ...this.state,
-      desErr: null
-    });
-    return true;
-  };
-  validateAmount = () => {
-    const amount = document.getElementById("amount").value;
-    const amountRegX = /[0-9]/;
-    if (amount === "" || amount === null) {
-      this.setState({
-        ...this.state,
-        amtErr: "Amount cannot be empty"
-      });
-      return false;
-    } else if (amountRegX.test(amount) === false) {
-      this.setState({
-        ...this.state,
-        amtErr: "Amount can only have numeric values"
-      });
-      return false;
-    }
-    this.setState({
-      ...this.state,
-      amtErr: null
-    });
-    return true;
+  //   validateDescription = () => {
+  //     const description = document.getElementById("description").value;
+  //     const descRegX = /[A-Za-z0-9]/;
+  //     if (description === "" || description === null) {
+  //       this.setState({
+  //         ...this.state,
+  //         desErr: "Description cannot be empty"
+  //       });
+  //       return false;
+  //     } else if (descRegX.test(description) === false) {
+  //       this.setState({
+  //         ...this.state,
+  //         desErr: "Description cannot have special characters"
+  //       });
+  //       return false;
+  //     }
+  //     return true;
+  //   };
+
+  //   validateAmount = () => {
+  //     const amount = document.getElementById("amount").value;
+  //     const amountRegX = /[0-9]/;
+  //     if (amount === "" || amount === null) {
+  //       this.setState({
+  //         ...this.state,
+  //         amtErr: "Amount cannot be empty"
+  //       });
+  //       return false;
+  //     } else if (amountRegX.test(amount) === false) {
+  //       this.setState({
+  //         ...this.state,
+  //         amtErr: "Amount can only have numeric values"
+  //       });
+  //       return false;
+  //     }
+  //     return true;
+  //   };
+  //   validateType = () => {
+  //     const type = document.getElementById("type").value;
+  //     console.log();
+  //     if (type === "" || type === null || type === "---") {
+  //       this.setState({
+  //         ...this.state,
+  //         typeErr: "Choose at least one from the list"
+  //       });
+  //       return false;
+  //     }
+  //     return true;
+  //   };
+  //   validateDate = () => {
+  //     const date = document.getElementById("eventDate").value;
+  //     if (date === "" || date === null) {
+  //       this.setState({
+  //         ...this.state,
+  //         dateErr: "Date cannot be empty!!"
+  //       });
+  //       return false;
+  //     }
+  //     return true;
+  //   };
+  handleSubmit = e => {
+    e.preventDefault();
+    console.log(this.props);
+    // this.validate();
+    if (this.state.isValid) this.createList();
+    document.getElementById("form").reset();
   };
 
   createList = () => {
+    const { values } = this.props;
     const it = {};
-    it.amount = this.state.amount;
-    it.description = this.state.description;
-    it.type = this.state.type;
-    it.eventDate = this.state.eventDate;
-    this.setState({ List: [...this.state.List].concat(it) });
-    this.state.type === "Income"
+    it.amount = values.amount;
+    it.description = values.description;
+    it.type = values.type;
+    it.eventDate = values.eventDate;
+    this.setState({ List: [...this.state.List].concat(it) }, () =>
+      console.log(this.state)
+    );
+    values.type === "Income"
       ? this.setState({ IncomeList: [...this.state.IncomeList].concat(it) })
-      : this.state.type === "Expenses" &&
+      : values.type === "Expenses" &&
         this.setState({
           ExpensesList: [...this.state.ExpensesList].concat(it)
         });
@@ -112,11 +142,17 @@ class App extends Component {
     });
   };
 
-  updateInput = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+  //   updateInput = e => {
+  //     this.setState({ [e.target.name]: e.target.value });
+  //     this.setState({
+  //       amtErr: null,
+  //       desErr: null,
+  //       dateErr: null,
+  //       typeErr: null
+  //     });
+  //   };
 
-  viewBalanceSheet = e => {
+  toogleBalanceSheet = e => {
     e.preventDefault();
     this.setState({ display: this.state.display === false && true });
   };
@@ -131,20 +167,17 @@ class App extends Component {
               data={this.state.List}
               incomeList={this.state.IncomeList}
               expensesList={this.state.ExpensesList}
-              button={this.viewBalanceSheet}
+              button={this.toogleBalanceSheet}
               balance={this.state.balance}
               display={this.state.display}
             />
           ) : (
             <React.Fragment>
               <Form
-                submit={this.handleSubmit}
-                update={this.updateInput}
-                button={this.viewBalanceSheet}
+                handleSubmit={this.handleSubmit}
+                button={this.toogleBalanceSheet}
                 display={this.state.display}
                 validate={this.validate}
-                desErr={this.state.desErr}
-                amtErr={this.state.amtErr}
               />
               <AllList data={this.state.List} balance={this.state.balance} />
             </React.Fragment>
@@ -155,4 +188,14 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  values: getFormValues("form")(state),
+  formError: getFormError("form")(state),
+  dirty: isDirty("form")(state),
+  pristine: isPristine("form")(state),
+  valid: isValid("form")(state),
+  invalid: isInvalid("form")(state),
+  submitting: isSubmitting("form")(state)
+});
+
+export default connect(mapStateToProps)(App);

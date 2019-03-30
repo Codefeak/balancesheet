@@ -6,6 +6,7 @@ import { Entries, UL, ListWrapper } from "../../styledComponent";
 
 const ULheader = styled(UL)`
   overflow: auto;
+  font-weight: 600;
 `;
 
 const Li1 = styled.li`

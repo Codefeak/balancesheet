@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Income, UL } from "../../../styledComponent";
+import { Income, UL, ListWrapper } from "../../../styledComponent";
 
 const ULheader = styled(UL)`
   overflow: auto;
+  font-weight: 600;
 `;
 
 const ULlist = styled(UL)``;
@@ -25,16 +26,18 @@ class IncomeList extends React.Component {
             <li>Time of Entry</li>
             <li>Amount</li>
           </ULheader>
-          {this.props.data.map(item => {
-            return (
-              <ULlist key={Math.random()}>
-                <li>{item.description}</li>
-                <li>{item.date}</li>
-                <li>{item.time}</li>
-                <li>{item.amount}</li>
-              </ULlist>
-            );
-          })}
+          <ListWrapper>
+            {this.props.data.map(item => {
+              return (
+                <ULlist key={Math.random()}>
+                  <li>{item.description}</li>
+                  <li>{item.date}</li>
+                  <li>{item.time}</li>
+                  <li>{item.amount}</li>
+                </ULlist>
+              );
+            })}
+          </ListWrapper>
           <UL>
             <li>Total Income</li>
             <li />
