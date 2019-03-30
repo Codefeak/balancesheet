@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Field, reduxForm } from "redux-form";
 import formField from "./renderField";
+import validate from "../../validate";
 
 import {
   Button,
@@ -53,7 +54,8 @@ const ViewBtn = styled(Button)`
 `;
 
 const Form = props => {
-  const { handleSubmit } = props;
+  const { handleSubmit, submitting } = props;
+  console.log(props)
   return (
     <FormWrapper>
       <StyledForm id="form" onSubmit={handleSubmit}>
@@ -65,7 +67,6 @@ const Form = props => {
             label="Description :"
             placeholder="Enter Description"
           />
-          {props.desErr && <Err>{props.desErr}</Err>}
         </DescInputWrapper>
         <AmtInputWrapper>
           <Field
@@ -75,7 +76,6 @@ const Form = props => {
             label="Amount:"
             placeholder="Enter Amount"
           />
-          {props.amtErr && <Err>{props.amtErr}</Err>}
         </AmtInputWrapper>
         <SelectWrapper>
           <Label>Select Type:</Label>
@@ -84,7 +84,6 @@ const Form = props => {
             <Option value="Income">Income</Option>
             <Option value="Expenses">Expenses</Option>
           </Select>
-          {props.typeErr && alert(props.typeErr)}
         </SelectWrapper>
         <DateWrapper>
           <Field
@@ -95,12 +94,13 @@ const Form = props => {
             type="date"
           />
         </DateWrapper>
-        {props.dateErr && alert(props.dateErr)}
-        <AddBtn type="Submit">Add</AddBtn>
+        <AddBtn type="submit" disabled={submitting}>
+          Add
+        </AddBtn>
         <ViewBtn onClick={props.button}>View BalanceSheet</ViewBtn>
       </StyledForm>
     </FormWrapper>
   );
 };
 
-export default reduxForm({ form: "form" })(Form);
+export default reduxForm({ form: "form", validate })(Form);
