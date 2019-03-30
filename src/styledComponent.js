@@ -33,6 +33,8 @@ export const SelectWrapper = styled.div`
   grid-area: income;
   display: flex;
   align-items: center;
+  position: relative;
+
 `;
 
 export const Option = styled.option`

@@ -1,20 +1,12 @@
 import React, { Component } from "react";
-import {
-  getFormValues,
-  getFormError,
-  isDirty,
-  isPristine,
-  isValid,
-  isInvalid,
-  isSubmitting
-} from "redux-form";
+import { getFormValues, reset } from "redux-form";
+import { connect } from "react-redux";
 
 import Form from "./components/Form/Form";
 import AllList from "./components/AllList/AllList";
 import BalanceSheet from "./components/BalanceSheet/BalanceSheet";
 
 import { H1, InnerWrapper, ExtWrapper } from "./styledComponent";
-import { connect } from "react-redux";
 
 class App extends Component {
   state = {
@@ -31,10 +23,11 @@ class App extends Component {
     }
   }
 
-  handleSubmit = e => {
-    e.preventDefault();
+  formSubmit = (values, dispatch) => {
     this.createList();
+    dispatch(reset('form'));
     document.getElementById("form").reset();
+
   };
 
   createList = () => {
@@ -64,16 +57,6 @@ class App extends Component {
     });
   };
 
-  //   updateInput = e => {
-  //     this.setState({ [e.target.name]: e.target.value });
-  //     this.setState({
-  //       amtErr: null,
-  //       desErr: null,
-  //       dateErr: null,
-  //       typeErr: null
-  //     });
-  //   };
-
   toogleBalanceSheet = e => {
     e.preventDefault();
     this.setState({ display: this.state.display === false && true });
@@ -96,9 +79,10 @@ class App extends Component {
           ) : (
             <React.Fragment>
               <Form
-                handleSubmit={this.handleSubmit}
+                formSubmit={this.formSubmit}
                 button={this.toogleBalanceSheet}
                 display={this.state.display}
+                {...this.props}
               />
               <AllList data={this.state.List} balance={this.state.balance} />
             </React.Fragment>
@@ -110,13 +94,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  values: getFormValues("form")(state),
-  formError: getFormError("form")(state),
-  dirty: isDirty("form")(state),
-  pristine: isPristine("form")(state),
-  valid: isValid("form")(state),
-  invalid: isInvalid("form")(state),
-  submitting: isSubmitting("form")(state)
+  values: getFormValues("form")(state)
 });
 
 export default connect(mapStateToProps)(App);

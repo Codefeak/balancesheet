@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Field, reduxForm } from "redux-form";
 import formField from "./renderField";
 import validate from "../../validate";
+import { getFormSyncErrors } from "redux-form";
+import { connect } from "react-redux";
 
 import {
   Button,
@@ -39,6 +41,8 @@ const DateWrapper = styled.div`
   grid-area: date;
   display: flex;
   text-align: right;
+  align-items: center;
+  position: relative;
 `;
 export const Select = styled(Field)`
   margin: 15px 0;
@@ -54,11 +58,19 @@ const ViewBtn = styled(Button)`
 `;
 
 const Form = props => {
-  const { handleSubmit, submitting } = props;
-  console.log(props)
+  const {
+    handleSubmit,
+    formSubmit,
+    submitting,
+    pristine,
+    invalid,
+    formSyncErrors,
+    anyTouched
+  } = props;
+
   return (
     <FormWrapper>
-      <StyledForm id="form" onSubmit={handleSubmit}>
+      <StyledForm id="form" onSubmit={handleSubmit(formSubmit)}>
         <DescInputWrapper>
           <Field
             name="description"
@@ -84,6 +96,9 @@ const Form = props => {
             <Option value="Income">Income</Option>
             <Option value="Expenses">Expenses</Option>
           </Select>
+          {anyTouched && formSyncErrors.type && (
+            <Err>{formSyncErrors.type}</Err>
+          )}
         </SelectWrapper>
         <DateWrapper>
           <Field
@@ -93,8 +108,11 @@ const Form = props => {
             size="50px"
             type="date"
           />
+          {anyTouched && formSyncErrors.eventDate && (
+            <Err>{formSyncErrors.eventDate}</Err>
+          )}
         </DateWrapper>
-        <AddBtn type="submit" disabled={submitting}>
+        <AddBtn type="submit" disabled={pristine || invalid || submitting}>
           Add
         </AddBtn>
         <ViewBtn onClick={props.button}>View BalanceSheet</ViewBtn>
@@ -103,4 +121,14 @@ const Form = props => {
   );
 };
 
-export default reduxForm({ form: "form", validate })(Form);
+const mapStateToProps = state => ({
+  formSyncErrors: getFormSyncErrors("form")(state)
+});
+
+export default connect(mapStateToProps)(
+  reduxForm({
+    form: "form",
+    validate,
+    destroyOnUnmount: true
+  })(Form)
+);
